@@ -1,13 +1,31 @@
-import React from 'react';
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleContactClick = () => {
+    // Case 1: Already on Home page
+    if (location.pathname === "/") {
+      document
+        .getElementById("contact-section")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+    // Case 2: On any other page
+    else {
+      navigate("/contact", { state: { scrollToContact: true } });
+    }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3 px-3 px-lg-5">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <a href="/" className="navbar-brand d-flex d-lg-none">
         <h1 className="m-0 display-4 text-secondary">
-          <span className="text-white">Farm</span>Fresh
+          <span className="text-white">कृषि</span>Ai
         </h1>
       </a>
+
       <button
         className="navbar-toggler"
         type="button"
@@ -25,8 +43,18 @@ function Navbar() {
           <a href="/" className="nav-item nav-link active">Home</a>
           <a href="/login" className="nav-item nav-link">Login</a>
           <a href="/register" className="nav-item nav-link">Register</a>
-          <a href="/contact" className="nav-item nav-link">Contact</a>
-          <a href="https://rzp.io/l/wSXTA0m" className="nav-item nav-link">Donate</a>
+
+          {/* SMART CONTACT BUTTON */}
+          <button
+            className="nav-link btn btn-link"
+            onClick={handleContactClick}
+          >
+            Contact
+          </button>
+
+          <a href="https://rzp.io/l/wSXTA0m" className="nav-item nav-link">
+            Donate
+          </a>
         </div>
       </div>
     </nav>
